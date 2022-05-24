@@ -2,16 +2,17 @@ package ru.mobileup.education_space.solar_system
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.arkivanov.essenty.lifecycle.Lifecycle
-import ru.mobileup.core.R
-import ru.mobileup.education_space.utils.*
-import me.aartikov.sesame.loading.simple.Loading
-import me.aartikov.sesame.loading.simple.dataOrNull
 import me.aartikov.sesame.localizedstring.LocalizedString
 import org.junit.Assert
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.koin.test.KoinTestRule
+import ru.mobileup.core.R
+import ru.mobileup.education_space.utils.TestComponentContext
+import ru.mobileup.education_space.utils.awaitUntil
+import ru.mobileup.education_space.utils.componentFactory
+import ru.mobileup.education_space.utils.testKoin
 import ru.mobileup.features.solar_system.createSolarSystemPlanetsComponent
 import ru.mobileup.features.solar_system.domain.PlanetId
 import ru.mobileup.features.solar_system.ui.PlanetShortInfoViewData
@@ -37,9 +38,9 @@ class SolarSystemPlanetsComponentTest {
         val sut = koin.componentFactory.createSolarSystemPlanetsComponent(componentContext)
 
         componentContext.moveToState(Lifecycle.State.RESUMED)
-        awaitUntil { sut.planetsViewState is Loading.State.Loading }
-        awaitUntil { sut.planetsViewState !is Loading.State.Loading }
-        val actualPlanetsViewDataList = sut.planetsViewState.dataOrNull
+        awaitUntil { sut.planetsViewState.loading }
+        awaitUntil { !sut.planetsViewState.loading }
+        val actualPlanetsViewDataList = sut.planetsViewState.data
 
         Assert.assertEquals(10, actualPlanetsViewDataList?.count())
         Assert.assertEquals(data, actualPlanetsViewDataList?.firstOrNull())
