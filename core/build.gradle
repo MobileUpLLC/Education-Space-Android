@@ -3,6 +3,7 @@ plugins {
     id 'kotlin-android'
     id 'kotlinx-serialization'
     id 'kotlin-parcelize'
+    id 'kotlin-kapt'
 }
 
 android {
@@ -63,13 +64,19 @@ dependencies {
     implementation libs.okhttp.logging
 
     // Architecture
-    implementation libs.sesame.localizedString
+    implementation libs.bundles.sesame
     implementation libs.bundles.decompose
     implementation libs.bundles.replica
     debugImplementation libs.replica.devtools.debug
     releaseImplementation libs.replica.devtools.release
 
-    implementation libs.accompanist.swiperefresh
+    // Security
+    implementation libs.securitypreferences
+    implementation libs.biometric
+
+    // Room
+    implementation libs.bundles.room
+    kapt libs.room.compiler
 
     // Debugging
     implementation libs.timber

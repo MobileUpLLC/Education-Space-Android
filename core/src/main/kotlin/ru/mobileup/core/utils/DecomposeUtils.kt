@@ -3,6 +3,7 @@ package ru.mobileup.core.utils
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
+import com.arkivanov.decompose.router.Router
 import com.arkivanov.decompose.router.RouterState
 import com.arkivanov.decompose.value.Value
 import com.arkivanov.decompose.value.ValueObserver
@@ -47,4 +48,25 @@ fun LifecycleOwner.componentCoroutineScope(): CoroutineScope {
     }
 
     return scope
+}
+
+/**
+ * Возвращает элемент (Child) с вершины back-стека роутера.
+ * Никогда не null, потому что Decompose не допускает, чтобы стек стал пустым.
+ */
+val <C : Any, T : Any> RouterState<C, T>.currentInstance get() = activeChild.instance
+val <C : Any, T : Any> Router<C, T>.currentInstance get() = state.value.currentInstance
+
+/**
+ * Возвращает конфигурацию с вершины back-стека роутера.
+ * Никогда не null, потому что Decompose не допускает, чтобы стек стал пустым.
+ */
+val <C : Any, T : Any> RouterState<C, T>.currentConfiguration get() = activeChild.configuration
+val <C : Any, T : Any> Router<C, T>.currentConfiguration get() = state.value.currentConfiguration
+
+/**
+ * Заменяет весь стек навигации на новый, состоящий из одного элемента
+ */
+fun <C : Any> Router<C, *>.replaceAll(configuration: C) {
+    navigate { listOf(configuration) }
 }

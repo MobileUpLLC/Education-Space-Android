@@ -44,12 +44,12 @@ android {
     productFlavors {
         dev {
             dimension "environment"
-            buildConfigField "String", "BACKEND_URL", '"https://pokeapi.co/"'
+            buildConfigField "String", "BACKEND_URL", '"https://api.spacexdata.com/"'
         }
 
         prod {
             dimension "environment"
-            buildConfigField "String", "BACKEND_URL", '"https://pokeapi.co/"'
+            buildConfigField "String", "BACKEND_URL", '"https://api.spacexdata.com/"'
         }
     }
 
@@ -95,7 +95,7 @@ dependencies {
     implementation libs.compose.tooling
 
     // Architecture
-    implementation libs.sesame.localizedString
+    implementation libs.bundles.sesame
     implementation libs.bundles.decompose
     debugImplementation libs.replica.devtools.debug
     releaseImplementation libs.replica.devtools.release
@@ -120,4 +120,8 @@ dependencies {
     testImplementation libs.mockWebServer
     testImplementation libs.awaitility
     testImplementation libs.robolectric
+
+    // Room
+    implementation libs.bundles.room
+    kapt libs.room.compiler
 }

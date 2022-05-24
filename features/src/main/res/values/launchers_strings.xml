@@ -1,0 +1,4 @@
+<resources>
+    <string name="launchers_flight_number"># %d</string>
+    <string name="launchers_title">Upcoming launchers</string>
+</resources>

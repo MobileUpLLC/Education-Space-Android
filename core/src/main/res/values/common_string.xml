@@ -1,0 +1,32 @@
+<resources>
+    <!-- Common -->
+    <string name="common_cancel">Cancel</string>
+    <string name="common_retry">Retry</string>
+
+    <string-array name="dates_month_relative">
+        <item name="month_january">january</item>
+        <item name="month_february">february</item>
+        <item name="month_march">march</item>
+        <item name="month_april">april</item>
+        <item name="month_may">may</item>
+        <item name="month_june">june</item>
+        <item name="month_july">july</item>
+        <item name="month_august">august</item>
+        <item name="month_september">september</item>
+        <item name="month_october">october</item>
+        <item name="month_november">november</item>
+        <item name="month_december">december</item>
+    </string-array>
+
+    <!--  Biometric  -->
+    <string name="biometric_title">Entrance to Education Space</string>
+
+    <!-- Errors -->
+    <string name="error_unexpected_with_description">Something went wrong. The developers are already fixing the problem. %s</string>
+    <string name="error_unexpected">Something went wrong. The developers are already fixing the problem.</string>
+    <string name="error_no_internet_connection">No internet access.</string>
+    <string name="error_invalid_response">Server error. Please try again later.</string>
+    <string name="error_no_server_response">Failed to connect to the server. Please try again later.</string>
+    <string name="error_matching_application_not_found">No applications found to perform the action.</string>
+    <string name="error_ssl_handshake">Connection could not be established due to network security settings. Check the date and time of the device.</string>
+</resources>

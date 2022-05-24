@@ -1,0 +1,5 @@
+<resources>
+    <string name="home_settings_name">Settings</string>
+    <string name="home_upcoming_launchers_name">Launchers</string>
+    <string name="home_upcoming_solar_system_name">Solar System</string>
+</resources>

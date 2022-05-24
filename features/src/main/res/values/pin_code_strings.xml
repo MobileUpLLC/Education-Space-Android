@@ -1,0 +1,26 @@
+<resources>
+    <!--  Pincode  -->
+    <string name="pincode_forgot_pincode_btn">Forgot\nсode?</string>
+
+    <!--  Create pincode  -->
+    <string name="pincode_create_setup_title">Enter your pin code</string>
+    <string name="pincode_create_change_title">Create a new pin code</string>
+    <string name="pincode_create_error_not_match">The entered pin code codes do not match</string>
+    <string name="pincode_create_new_repeat_title">Confirm pin code</string>
+    <string name="pincode_create_change_repeat_title">Repeat the new pin code</string>
+
+    <!--  Check pincode  -->
+    <string name="check_pincode_confirm_title">Enter pin code</string>
+    <string name="check_pincode_change_title">Enter your current pin code</string>
+    <string name="check_pincode_error">Incorrect code</string>
+    <string name="check_pincode_forgotten_dialog_title">Forgot code?</string>
+    <string name="check_pincode_forgotten_dialog_msg">If you forgot the pin code, then you need to exit the application to install a new one.</string>
+    <string name="check_pincode_forgotten_dialog_positive_btn">Exit</string>
+    <string name="check_pincode_attempts_limit_dialog_tittle">Forgot code?</string>
+    <string name="check_pincode_attempts_limit_dialog_msg">If you have forgotten your pin code, you can update it in the settings.</string>
+    <string name="check_pincode_attempts_limit_dialog_btn">OK</string>
+
+    <!--  Change pincode  -->
+    <string name="change_pincode_toolbar_title">Pin code</string>
+    <string name="change_pincode_success_msg_text">New pin code set successfully!</string>
+</resources>

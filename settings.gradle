@@ -37,11 +37,16 @@ dependencyResolutionManagement {
             alias('appcompat').to('androidx.appcompat', 'appcompat').version('1.4.0')
             alias('coil').to('io.coil-kt', 'coil-compose').version('1.4.0')
 
-            alias('accompanist-swiperefresh').to('com.google.accompanist', 'accompanist-swiperefresh').version('0.20.0')
+            // Accompanist
+            alias('accompanist-systemuicontroller').to('com.google.accompanist', 'accompanist-systemuicontroller').version('0.20.0')
 
             // Architecture
             version('sesame', '1.5.0')
+            alias('sesame-loading').to('com.github.aartikov', 'sesame-loading').versionRef('sesame')
+            alias('sesame-dialog').to('com.github.aartikov', 'sesame-dialog').versionRef('sesame')
             alias('sesame-localizedString').to('com.github.aartikov', 'sesame-localized-string').versionRef('sesame')
+            alias('sesame-composeForm').to('com.github.aartikov', 'sesame-compose-form').versionRef('sesame')
+            bundle('sesame', ['sesame-loading', 'sesame-dialog', 'sesame-localizedString', 'sesame-composeForm'])
 
             version('decompose', '0.5.0')
             alias('decompose-core').to('com.arkivanov.decompose', 'decompose').versionRef('decompose')
@@ -74,8 +79,19 @@ dependencyResolutionManagement {
             alias('koinTestJunit').to('io.insert-koin', 'koin-test-junit4').versionRef('koin')
             bundle('koin-test', ['koinTest', 'koinTestJunit'])
 
+            // Security
+            alias('securitypreferences').to('androidx.security', 'security-crypto').version('1.0.0')
+            alias('biometric').to('androidx.biometric', 'biometric-ktx').version('1.2.0-alpha04')
+
             // Code quality
-            alias('detekt-formatting').to('io.gitlab.arturbosch.detekt', 'detekt-formatting').version("1.18.1")
+            version('detekt', '1.18.1')
+            alias('detekt-formatting').to('io.gitlab.arturbosch.detekt', 'detekt-formatting').versionRef('detekt')
+
+            version('room', '2.4.1')
+            alias('room-runtime').to('androidx.room', 'room-runtime').versionRef('room')
+            alias('room-compiler').to('androidx.room', 'room-compiler').versionRef('room')
+            alias('room-ktx').to('androidx.room', 'room-ktx').versionRef('room')
+            bundle('room', ['room-runtime', 'room-ktx'])
 
             // Debugging
             alias('timber').to('com.jakewharton.timber', 'timber').version('5.0.1')
