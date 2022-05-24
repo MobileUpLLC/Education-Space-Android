@@ -22,6 +22,8 @@ import ru.mobileup.features.pin_code.ui.change_pin_code.ChangePinCodeComponent
 import ru.mobileup.features.start.createStartComponent
 import ru.mobileup.features.start.ui.StartComponent
 import kotlinx.parcelize.Parcelize
+import ru.mobileup.features.pin_code.createPinCodeProtectionComponent
+import ru.mobileup.features.pin_code.ui.pin_code_protection.PinCodeProtectionComponent
 
 class RealRootComponent(
     componentContext: ComponentContext,
@@ -43,6 +45,12 @@ class RealRootComponent(
 
     override val messageComponent =
         componentFactory.createMessagesComponent(childContext(key = "message"))
+
+    @Suppress("unused")
+    private val pinCodeProtectionComponent = componentFactory.createPinCodeProtectionComponent(
+        childContext(key = "pin_code_protection"),
+        ::onPinCodeProtectionOutput
+    )
 
     private fun createChild(config: ChildConfig, componentContext: ComponentContext) =
         when (config) {
@@ -108,6 +116,14 @@ class RealRootComponent(
         when (output) {
             is ChangePinCodeComponent.Output.PinCodeChanged -> router.pop()
             is ChangePinCodeComponent.Output.LoggedOut -> router.replaceAll(ChildConfig.Authorization)
+        }
+    }
+
+    private fun onPinCodeProtectionOutput(output: PinCodeProtectionComponent.Output) {
+        when (output) {
+            is PinCodeProtectionComponent.Output.CheckPinCodeRequested -> router.replaceAll(
+                ChildConfig.Home(HomeComponent.InitialScreen.CheckPinCode)
+            )
         }
     }
 

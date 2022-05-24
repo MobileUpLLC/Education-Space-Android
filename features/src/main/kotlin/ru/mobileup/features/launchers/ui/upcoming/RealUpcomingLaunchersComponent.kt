@@ -3,32 +3,20 @@ package ru.mobileup.features.launchers.ui.upcoming
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import com.arkivanov.decompose.ComponentContext
-import com.arkivanov.essenty.lifecycle.doOnCreate
-import com.arkivanov.essenty.lifecycle.doOnStart
+import me.aartikov.replica.single.Replica
 import ru.mobileup.core.error_handling.ErrorHandler
-import ru.mobileup.core.utils.componentCoroutineScope
-import ru.mobileup.core.utils.toComposeState
-import ru.mobileup.features.launchers.domain.LoadUpcomingLaunchersInteractor
+import ru.mobileup.features.launchers.domain.Launcher
 import ru.mobileup.features.launchers.ui.toViewData
-import me.aartikov.sesame.loading.simple.OrdinaryLoading
-import me.aartikov.sesame.loading.simple.mapData
-import me.aartikov.sesame.loading.simple.refresh
-import ru.mobileup.core.utils.handleErrors
+import  ru.mobileup.core.utils.observe
+import me.aartikov.replica.single.mapData
 
 class RealUpcomingLaunchersComponent(
     componentContext: ComponentContext,
-    private val errorHandler: ErrorHandler,
-    loadUpcomingLaunchersInteractor: LoadUpcomingLaunchersInteractor,
+    errorHandler: ErrorHandler,
+    private val upcomingLaunchersReplica: Replica<List<Launcher>>
 ) : ComponentContext by componentContext, UpcomingLaunchersComponent {
 
-    private val coroutineScope = componentCoroutineScope()
-
-    private val upcomingLaunchersLoading = OrdinaryLoading(
-        scope = coroutineScope,
-        load = { loadUpcomingLaunchersInteractor.execute() }
-    )
-
-    private val upcomingLaunchersState by upcomingLaunchersLoading.stateFlow.toComposeState(coroutineScope)
+    private val upcomingLaunchersState by upcomingLaunchersReplica.observe(lifecycle, errorHandler)
 
     override val upcomingLaunchersViewState by derivedStateOf {
         upcomingLaunchersState.mapData { launchers ->
@@ -36,16 +24,7 @@ class RealUpcomingLaunchersComponent(
         }
     }
 
-    init {
-        lifecycle.doOnCreate {
-            upcomingLaunchersLoading.handleErrors(coroutineScope, errorHandler)
-        }
-        lifecycle.doOnStart {
-            upcomingLaunchersLoading.refresh()
-        }
-    }
-
     override fun onRetryClick() {
-        upcomingLaunchersLoading.refresh()
+        upcomingLaunchersReplica.refresh()
     }
 }

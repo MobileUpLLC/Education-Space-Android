@@ -17,6 +17,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberImagePainter
+import me.aartikov.replica.single.Loadable
 import ru.mobileup.core.widget.Toolbar
 import ru.mobileup.core.theme.AppTheme
 import ru.mobileup.features.launchers.domain.LauncherId
@@ -25,6 +26,7 @@ import ru.mobileup.core.utils.resolve
 import ru.mobileup.features.launchers.ui.LauncherViewData
 import me.aartikov.sesame.loading.simple.Loading
 import ru.mobileup.core.widget.LceWidget
+import ru.mobileup.core.widget.SecureScreen
 
 @Composable
 fun UpcomingLaunchersUi(
@@ -40,16 +42,18 @@ fun UpcomingLaunchersUi(
             )
         },
         content = { paddingValue ->
+            SecureScreen()
+
             LceWidget(
-                data = component.upcomingLaunchersViewState,
+                state = component.upcomingLaunchersViewState,
                 onRetryClick = component::onRetryClick,
                 modifier = Modifier.padding(paddingValue)
-            ) { data ->
+            ) { items, _ ->
                 LazyColumn(
                     verticalArrangement = Arrangement.spacedBy(16.dp),
                     contentPadding = PaddingValues(vertical = 16.dp)
                 ) {
-                    items(items = data, key = { item -> item.id.value }) {
+                    items(items = items, key = { item -> item.id.value }) {
                         LauncherCard(data = it, onItemClick = {})
                     }
                 }
@@ -122,7 +126,11 @@ fun UpcomingLaunchersUiPreview() {
 }
 
 class FakeUpcomingLaunchersComponent : UpcomingLaunchersComponent {
-    override val upcomingLaunchersViewState = Loading.State.Data(LauncherViewData.mocks())
+
+    override val upcomingLaunchersViewState = Loadable(
+        loading = false,
+        data = LauncherViewData.mocks()
+    )
 
     override fun onRetryClick() = Unit
 }

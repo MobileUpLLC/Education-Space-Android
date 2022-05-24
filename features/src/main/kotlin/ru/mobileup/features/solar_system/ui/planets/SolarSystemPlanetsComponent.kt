@@ -1,11 +1,11 @@
 package ru.mobileup.features.solar_system.ui.planets
 
+import me.aartikov.replica.single.Loadable
 import ru.mobileup.features.solar_system.ui.PlanetShortInfoViewData
-import me.aartikov.sesame.loading.simple.Loading
 
 interface SolarSystemPlanetsComponent {
 
-    val planetsViewState: Loading.State<List<PlanetShortInfoViewData>>
+    val planetsViewState: Loadable<List<PlanetShortInfoViewData>>
 
     fun onRetryClick()
 }

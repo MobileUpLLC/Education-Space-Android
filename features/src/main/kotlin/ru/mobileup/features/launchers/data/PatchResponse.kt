@@ -1,8 +1,8 @@
 package ru.mobileup.features.launchers.data
 
-import ru.mobileup.features.launchers.domain.Patch
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import ru.mobileup.features.launchers.domain.Patch
 
 @Serializable
 class PatchResponse(
