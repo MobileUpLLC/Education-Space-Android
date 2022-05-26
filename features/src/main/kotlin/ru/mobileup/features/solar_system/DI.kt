@@ -3,20 +3,19 @@ package ru.mobileup.features.solar_system
 import com.arkivanov.decompose.ComponentContext
 import ru.mobileup.core.ComponentFactory
 import ru.mobileup.core.storage.BaseRoomDatabase
-import ru.mobileup.features.solar_system.data.SolarSystemStorage
-import ru.mobileup.features.solar_system.data.SolarSystemStorageImpl
-import ru.mobileup.features.solar_system.domain.GetPlanetsShortInfoInteractor
 import ru.mobileup.features.solar_system.ui.planets.RealSolarSystemPlanetsComponent
 import ru.mobileup.features.solar_system.ui.planets.SolarSystemPlanetsComponent
 import org.koin.core.component.get
 import org.koin.dsl.module
+import ru.mobileup.features.solar_system.data.SolarSystemRepository
+import ru.mobileup.features.solar_system.data.SolarSystemRepositoryImpl
 
 val solarSystemModule = module {
     single { get<BaseRoomDatabase>().getPlanetsDao() }
-    single<SolarSystemStorage> { SolarSystemStorageImpl(get()) }
-    factory { GetPlanetsShortInfoInteractor(get()) }
+    single<SolarSystemRepository> { SolarSystemRepositoryImpl(get(), get()) }
 }
 
 fun ComponentFactory.createSolarSystemPlanetsComponent(componentContext: ComponentContext): SolarSystemPlanetsComponent {
-    return RealSolarSystemPlanetsComponent(componentContext, get(), get())
+    val planetShortInfoReplica = get<SolarSystemRepository>().planetShortInfoReplica
+    return RealSolarSystemPlanetsComponent(componentContext, get(), planetShortInfoReplica)
 }

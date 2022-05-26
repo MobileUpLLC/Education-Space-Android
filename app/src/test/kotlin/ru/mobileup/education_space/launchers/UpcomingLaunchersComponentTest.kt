@@ -2,10 +2,8 @@ package ru.mobileup.education_space.launchers
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.arkivanov.essenty.lifecycle.Lifecycle
-import ru.mobileup.education_space.utils.*
 import kotlinx.datetime.Instant
-import me.aartikov.sesame.loading.simple.Loading
-import me.aartikov.sesame.loading.simple.dataOrNull
+import me.aartikov.replica.single.Loadable
 import me.aartikov.sesame.localizedstring.LocalizedString
 import okhttp3.mockwebserver.MockResponse
 import org.junit.Assert
@@ -13,14 +11,13 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.koin.test.KoinTestRule
-import ru.mobileup.core.message.createMessagesComponent
 import ru.mobileup.core.network.BaseUrlProvider
 import ru.mobileup.core.utils.DateTimeLocalizedString
-import ru.mobileup.education_space.utils.MockServerRule
+import ru.mobileup.education_space.utils.*
+import ru.mobileup.features.R
 import ru.mobileup.features.launchers.createUpcomingLaunchersComponent
 import ru.mobileup.features.launchers.domain.LauncherId
 import ru.mobileup.features.launchers.ui.LauncherViewData
-import ru.mobileup.features.R
 
 @RunWith(AndroidJUnit4::class)
 class UpcomingLaunchersComponentTest {
@@ -47,11 +44,14 @@ class UpcomingLaunchersComponentTest {
             .createUpcomingLaunchersComponent(componentContext)
         componentContext.moveToState(Lifecycle.State.RESUMED)
 
-        awaitUntil { sut.upcomingLaunchersViewState is Loading.State.Loading }
-        awaitUntil { sut.upcomingLaunchersViewState !is Loading.State.Loading }
+        awaitUntil { sut.upcomingLaunchersViewState.loading }
+        awaitUntil { !sut.upcomingLaunchersViewState.loading }
         val actualLaunchersViewState = sut.upcomingLaunchersViewState
 
-        Assert.assertEquals(Loading.State.Empty, actualLaunchersViewState)
+        Assert.assertEquals(
+            Loadable(loading = false, data = emptyList<LauncherViewData>()),
+            actualLaunchersViewState
+        )
     }
 
     @Test
@@ -77,9 +77,9 @@ class UpcomingLaunchersComponentTest {
         )
         componentContext.moveToState(Lifecycle.State.RESUMED)
 
-        awaitUntil { sut.upcomingLaunchersViewState is Loading.State.Loading }
-        awaitUntil { sut.upcomingLaunchersViewState !is Loading.State.Loading }
-        val actualLauncherViewDataList = sut.upcomingLaunchersViewState.dataOrNull
+        awaitUntil { sut.upcomingLaunchersViewState.loading }
+        awaitUntil { !sut.upcomingLaunchersViewState.loading }
+        val actualLauncherViewDataList = sut.upcomingLaunchersViewState.data
 
         Assert.assertEquals(2, actualLauncherViewDataList?.count())
         Assert.assertEquals(data, actualLauncherViewDataList?.firstOrNull())
@@ -92,21 +92,16 @@ class UpcomingLaunchersComponentTest {
             single<BaseUrlProvider> { MockServerBaseUrlProvider(mockServerRule) }
         }
         val componentContext = TestComponentContext()
-        val messageComponent = koin
-            .componentFactory
-            .createMessagesComponent(componentContext)
         val sut = koin
             .componentFactory
             .createUpcomingLaunchersComponent(componentContext)
         componentContext.moveToState(Lifecycle.State.RESUMED)
 
-        awaitUntil { sut.upcomingLaunchersViewState is Loading.State.Loading }
-        awaitUntil { sut.upcomingLaunchersViewState !is Loading.State.Loading }
-        val actualMessageDialogControlData = messageComponent.visibleMessageData
+        awaitUntil { sut.upcomingLaunchersViewState.loading }
+        awaitUntil { !sut.upcomingLaunchersViewState.loading }
         val upcomingLaunchersViewState = sut.upcomingLaunchersViewState
 
-        Assert.assertNotNull(actualMessageDialogControlData)
-        Assert.assertTrue(upcomingLaunchersViewState is Loading.State.Error)
+        Assert.assertTrue(upcomingLaunchersViewState.error != null)
     }
 
     @Test
@@ -132,13 +127,13 @@ class UpcomingLaunchersComponentTest {
             patchImage = "https://i.imgur.com/h4x6VFd.png"
         )
         componentContext.moveToState(Lifecycle.State.RESUMED)
-        awaitUntil { sut.upcomingLaunchersViewState is Loading.State.Loading }
-        awaitUntil { sut.upcomingLaunchersViewState !is Loading.State.Loading }
+        awaitUntil { sut.upcomingLaunchersViewState.loading }
+        awaitUntil { !sut.upcomingLaunchersViewState.loading }
 
         sut.onRetryClick()
-        awaitUntil { sut.upcomingLaunchersViewState is Loading.State.Loading }
-        awaitUntil { sut.upcomingLaunchersViewState !is Loading.State.Loading }
-        val actualLaunchersViewDataList = sut.upcomingLaunchersViewState.dataOrNull
+        awaitUntil { sut.upcomingLaunchersViewState.loading }
+        awaitUntil { !sut.upcomingLaunchersViewState.loading }
+        val actualLaunchersViewDataList = sut.upcomingLaunchersViewState.data
 
         Assert.assertEquals(2, actualLaunchersViewDataList?.count())
         Assert.assertEquals(data, actualLaunchersViewDataList?.firstOrNull())

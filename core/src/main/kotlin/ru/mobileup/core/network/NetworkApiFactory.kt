@@ -8,11 +8,14 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import ru.mobileup.core.BuildConfig
-import ru.mobileup.core.DebugToolsInitializer
+import ru.mobileup.core.debug_tools.DebugTools
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
 
-class NetworkApiFactory(private val urlProvider: BaseUrlProvider) {
+class NetworkApiFactory(
+    private val urlProvider: BaseUrlProvider,
+    private val debugTools: DebugTools
+) {
 
     companion object {
         private const val CONNECT_TIMEOUT_SECONDS = 30L
@@ -49,7 +52,7 @@ class NetworkApiFactory(private val urlProvider: BaseUrlProvider) {
         return Retrofit.Builder()
             .baseUrl(urlProvider.getUrl())
             .client(okHttpClient)
-            .addCallAdapterFactory(ErrorHandlingCallAdapterFactory())
+            .addCallAdapterFactory(ErrorHandlingCallAdapterFactory(debugTools))
             .addConverterFactory(ErrorHandlingConverterFactory(json.asConverterFactory("application/json".toMediaType())))
             .build()
     }
@@ -67,8 +70,7 @@ class NetworkApiFactory(private val urlProvider: BaseUrlProvider) {
 
                 if (BuildConfig.DEBUG) {
                     addNetworkInterceptor(createLoggingInterceptor())
-                    DebugToolsInitializer.chuckerInterceptor?.let { addInterceptor(it) }
-                    DebugToolsInitializer.networkEmulatorInterceptor?.let { addInterceptor(it) }
+                    debugTools.interceptors.forEach { addInterceptor(it) }
                 }
             }
             .build()

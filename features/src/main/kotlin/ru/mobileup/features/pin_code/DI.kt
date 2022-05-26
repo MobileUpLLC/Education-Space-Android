@@ -25,6 +25,8 @@ import org.koin.core.component.get
 import org.koin.core.qualifier.named
 import org.koin.dsl.bind
 import org.koin.dsl.module
+import ru.mobileup.features.pin_code.ui.pin_code_protection.PinCodeProtectionComponent
+import ru.mobileup.features.pin_code.ui.pin_code_protection.RealPinCodeProtectionComponent
 
 val pinCodeModule = module {
     val alias = "pin_code_alias"
@@ -94,4 +96,11 @@ fun ComponentFactory.createChangePinCodeComponent(
     onOutput: (ChangePinCodeComponent.Output) -> Unit
 ): ChangePinCodeComponent {
     return RealChangePinCodeComponent(componentContext, onOutput, get(), get())
+}
+
+fun ComponentFactory.createPinCodeProtectionComponent(
+    componentContext: ComponentContext,
+    onOutput: (PinCodeProtectionComponent.Output) -> Unit
+): PinCodeProtectionComponent {
+    return RealPinCodeProtectionComponent(componentContext, onOutput, get())
 }

@@ -1,11 +1,11 @@
 package ru.mobileup.features.launchers.data
 
-import ru.mobileup.features.launchers.domain.Launcher
-import ru.mobileup.features.launchers.domain.LauncherId
 import kotlinx.datetime.Instant
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import me.aartikov.sesame.localizedstring.LocalizedString
+import ru.mobileup.features.launchers.domain.Launcher
+import ru.mobileup.features.launchers.domain.LauncherId
 
 @Serializable
 class LauncherResponse(
