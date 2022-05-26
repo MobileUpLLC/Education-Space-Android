@@ -120,6 +120,7 @@ class RealRootComponent(
     }
 
     private fun onPinCodeProtectionOutput(output: PinCodeProtectionComponent.Output) {
+        // Set up routing for your project
         when (output) {
             is PinCodeProtectionComponent.Output.CheckPinCodeRequested -> router.replaceAll(
                 ChildConfig.Home(HomeComponent.InitialScreen.CheckPinCode)
