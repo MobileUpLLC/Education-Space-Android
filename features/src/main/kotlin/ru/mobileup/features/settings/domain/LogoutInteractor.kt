@@ -1,11 +1,11 @@
 package ru.mobileup.features.settings.domain
 
-import ru.mobileup.core.data_cleaner.CleanDataInteractor
+import ru.mobileup.features.pin_code.domain.ClearPinCodeInteractor
 
-class LogoutInteractor(private val cleanDataInteractor: CleanDataInteractor) {
+class LogoutInteractor(private val clearPinCodeInteractor: ClearPinCodeInteractor) {
 
     suspend fun execute() {
         // Чистим закешированные данные
-        cleanDataInteractor.execute()
+        clearPinCodeInteractor.execute()
     }
 }

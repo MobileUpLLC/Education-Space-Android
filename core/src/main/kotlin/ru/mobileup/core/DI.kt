@@ -10,8 +10,6 @@ import org.koin.dsl.module
 import ru.mobileup.core.activity.ActivityProvider
 import ru.mobileup.core.biometric.BiometricService
 import ru.mobileup.core.biometric.BiometricServiceImpl
-import ru.mobileup.core.data_cleaner.CleanDataInteractor
-import ru.mobileup.core.data_cleaner.DataCleaner
 import ru.mobileup.core.debug_tools.DebugTools
 import ru.mobileup.core.error_handling.ErrorHandler
 import ru.mobileup.core.exit.ExitService
@@ -39,7 +37,6 @@ fun coreModule(backendUrl: String) = module {
     single<MessageService> { MessageServiceImpl() }
     single { ErrorHandler(get()) }
     single { RealRoomDatabaseFactory().createDatabaseInstance(androidContext()) }
-    factory { CleanDataInteractor(getAll<DataCleaner>().distinct()) }
     single<DebugTools> { RealDebugToolsImpl(androidContext()) }
     single { NetworkApiFactory(get(), get()) }
     single<TimeGateway> { TimeGatewayImpl() }
