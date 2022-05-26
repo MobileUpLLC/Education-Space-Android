@@ -24,6 +24,8 @@ import ru.mobileup.core.network.RealBaseUrlProvider
 import ru.mobileup.core.storage.RealRoomDatabaseFactory
 import ru.mobileup.core.storage.RealSharedPreferencesFactory
 import ru.mobileup.core.storage.SharedPreferencesFactory
+import ru.mobileup.core.time.TimeGateway
+import ru.mobileup.core.time.TimeGatewayImpl
 
 fun coreModule(backendUrl: String) = module {
     single { ActivityProvider() }
@@ -40,4 +42,5 @@ fun coreModule(backendUrl: String) = module {
     factory { CleanDataInteractor(getAll<DataCleaner>().distinct()) }
     single<DebugTools> { RealDebugToolsImpl(androidContext()) }
     single { NetworkApiFactory(get(), get()) }
+    single<TimeGateway> { TimeGatewayImpl() }
 }

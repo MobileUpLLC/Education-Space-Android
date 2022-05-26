@@ -102,5 +102,5 @@ fun ComponentFactory.createPinCodeProtectionComponent(
     componentContext: ComponentContext,
     onOutput: (PinCodeProtectionComponent.Output) -> Unit
 ): PinCodeProtectionComponent {
-    return RealPinCodeProtectionComponent(componentContext, onOutput)
+    return RealPinCodeProtectionComponent(componentContext, onOutput, get())
 }

@@ -3,8 +3,8 @@ package ru.mobileup.features.pin_code.ui.pin_code_protection
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.essenty.lifecycle.doOnStart
 import com.arkivanov.essenty.lifecycle.doOnStop
-import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
+import ru.mobileup.core.time.TimeGateway
 import kotlin.time.Duration
 import kotlin.time.DurationUnit
 import kotlin.time.toDuration
@@ -12,6 +12,7 @@ import kotlin.time.toDuration
 class RealPinCodeProtectionComponent(
     componentContext: ComponentContext,
     private val onOutput: (PinCodeProtectionComponent.Output) -> Unit,
+    timeGateway: TimeGateway
 ) : ComponentContext by componentContext, PinCodeProtectionComponent {
 
     companion object {
@@ -23,7 +24,7 @@ class RealPinCodeProtectionComponent(
     init {
         lifecycle.doOnStart {
             if (backgroundStartTime != null) {
-                val currentMoment = Clock.System.now()
+                val currentMoment = timeGateway.currentTime
                 val difference = currentMoment.minus(backgroundStartTime!!)
                 if (difference >= PROTECTION_TIMEOUT) {
                     onOutput(PinCodeProtectionComponent.Output.CheckPinCodeRequested)
@@ -32,7 +33,7 @@ class RealPinCodeProtectionComponent(
             }
         }
         lifecycle.doOnStop {
-            backgroundStartTime = Clock.System.now()
+            backgroundStartTime = timeGateway.currentTime
         }
     }
 }
