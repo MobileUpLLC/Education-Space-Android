@@ -1,4 +1,4 @@
-# education_space_android
+# Education Space Android
 Demonstration of usage Google Biometric API, Room and Unit-tests.
 
 ## Topics for work
