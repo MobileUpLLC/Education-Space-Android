@@ -1,9 +1,10 @@
 package ru.mobileup.features.pin_code.domain
 
-class IsPinCodeSetInteractor(private val getPinCodeInteractor: GetPinCodeInteractor) {
+import ru.mobileup.features.pin_code.data.PinCodeStorage
+
+class IsPinCodeSetInteractor(private val pinCodeStorage: PinCodeStorage) {
 
     suspend fun execute(): Boolean {
-
-        return getPinCodeInteractor.execute() != null
+        return pinCodeStorage.getPinCode() != null
     }
 }

@@ -7,7 +7,7 @@ import ru.mobileup.core.storage.SharedPreferencesFactory
 import ru.mobileup.features.pin_code.data.PinCodeCleaner
 import ru.mobileup.features.pin_code.data.PinCodeStorage
 import ru.mobileup.features.pin_code.data.PinCodeStorageImpl
-import ru.mobileup.features.pin_code.domain.GetPinCodeInteractor
+import ru.mobileup.features.pin_code.domain.CheckPinCodeInteractor
 import ru.mobileup.features.pin_code.domain.IsPinCodeSetInteractor
 import ru.mobileup.features.pin_code.domain.SavePinCodeInteractor
 import ru.mobileup.features.pin_code.ui.change_pin_code.ChangePinCodeComponent
@@ -43,7 +43,7 @@ val pinCodeModule = module {
     single<PinCodeStorage> { PinCodeStorageImpl(get(named(pinCodePrefsName))) }
     factory { SavePinCodeInteractor(get()) }
     factory { IsPinCodeSetInteractor(get()) }
-    factory { GetPinCodeInteractor(get()) }
+    factory { CheckPinCodeInteractor(get()) }
 }
 
 fun ComponentFactory.createCreatingPinCodeComponent(

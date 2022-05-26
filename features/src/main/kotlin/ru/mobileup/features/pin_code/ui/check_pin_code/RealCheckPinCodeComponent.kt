@@ -11,7 +11,7 @@ import ru.mobileup.core.error_handling.ErrorHandler
 import ru.mobileup.core.utils.componentCoroutineScope
 import ru.mobileup.core.error_handling.safeLaunch
 import ru.mobileup.features.pin_code.createPinCodeComponent
-import ru.mobileup.features.pin_code.domain.GetPinCodeInteractor
+import ru.mobileup.features.pin_code.domain.CheckPinCodeInteractor
 import ru.mobileup.features.pin_code.domain.PinCode
 import ru.mobileup.features.pin_code.ui.pin_code.PinCodeComponent
 import ru.mobileup.features.settings.domain.LogoutInteractor
@@ -29,7 +29,7 @@ class RealCheckPinCodeComponent(
     private val onOutput: (CheckPinCodeComponent.Output) -> Unit,
     mode: CheckPinCodeMode,
     componentFactory: ComponentFactory,
-    private val getPinCodeInteractor: GetPinCodeInteractor,
+    private val checkPinCodeInteractor: CheckPinCodeInteractor,
     private val logoutInteractor: LogoutInteractor,
     private val errorHandler: ErrorHandler,
     private val biometricService: BiometricService
@@ -80,7 +80,7 @@ class RealCheckPinCodeComponent(
     }
 
     private fun checkEnteredPinCode(pinCode: PinCode) = coroutineScope.safeLaunch(errorHandler) {
-        if (pinCode == getPinCodeInteractor.execute()) {
+        if (checkPinCodeInteractor.execute(pinCode)) {
             onOutput(CheckPinCodeComponent.Output.PinCodeChecked)
         } else {
             pinCodeComponent.showError(LocalizedString.resource(R.string.check_pincode_error))
