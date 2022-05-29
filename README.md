@@ -23,3 +23,7 @@ Demonstration of usage Google Biometric API, Room and Unit-tests.
 - Used Mock-Server for network request testing
 - Used Robolectric
 - Used Awaitility for asynchronous operations
+
+## Developed by
+[developer-kaczmarek](https://github.com/developer-kaczmarek) - Lina Podbolotova
+
