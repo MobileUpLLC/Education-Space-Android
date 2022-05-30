@@ -12,8 +12,6 @@ interface CheckPinCodeComponent {
 
     val forgottenPinCodeDialogControl: DialogControl<AlertDialogData, DialogResult>
 
-    val attemptsLimitDialogControl: DialogControl<AlertDialogData, DialogResult>
-
     val pinCodeComponent: PinCodeComponent
 
     sealed interface Output {

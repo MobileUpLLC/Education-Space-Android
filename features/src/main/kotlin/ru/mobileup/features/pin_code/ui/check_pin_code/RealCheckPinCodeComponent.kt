@@ -50,8 +50,6 @@ class RealCheckPinCodeComponent(
 
     override val forgottenPinCodeDialogControl = DialogControl<AlertDialogData, DialogResult>()
 
-    override val attemptsLimitDialogControl = DialogControl<AlertDialogData, DialogResult>()
-
     override val pinCodeComponent: PinCodeComponent =
         componentFactory.createPinCodeComponent(
             childContext("pincode"),

@@ -43,7 +43,6 @@ fun CheckPinCodeUi(
             modifier = Modifier.padding(bottom = 32.dp)
         )
         ShowAlertDialog(dialogControl = component.forgottenPinCodeDialogControl)
-        ShowAlertDialog(dialogControl = component.attemptsLimitDialogControl)
     }
 }
 
@@ -60,8 +59,6 @@ class FakeCheckPinCodeComponent : CheckPinCodeComponent {
     override val title = LocalizedString.resource(R.string.check_pincode_confirm_title)
 
     override val forgottenPinCodeDialogControl = DialogControl<AlertDialogData, DialogResult>()
-
-    override val attemptsLimitDialogControl = DialogControl<AlertDialogData, DialogResult>()
 
     override val pinCodeComponent: PinCodeComponent = FakePinCodeComponent()
 }
