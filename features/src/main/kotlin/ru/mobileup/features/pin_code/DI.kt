@@ -1,13 +1,16 @@
 package ru.mobileup.features.pin_code
 
 import com.arkivanov.decompose.ComponentContext
+import org.koin.android.ext.koin.androidContext
+import org.koin.core.component.get
+import org.koin.core.qualifier.named
+import org.koin.dsl.module
 import ru.mobileup.core.ComponentFactory
-import ru.mobileup.core.data_cleaner.DataCleaner
 import ru.mobileup.core.storage.SharedPreferencesFactory
-import ru.mobileup.features.pin_code.data.PinCodeCleaner
 import ru.mobileup.features.pin_code.data.PinCodeStorage
 import ru.mobileup.features.pin_code.data.PinCodeStorageImpl
 import ru.mobileup.features.pin_code.domain.CheckPinCodeInteractor
+import ru.mobileup.features.pin_code.domain.ClearPinCodeInteractor
 import ru.mobileup.features.pin_code.domain.IsPinCodeSetInteractor
 import ru.mobileup.features.pin_code.domain.SavePinCodeInteractor
 import ru.mobileup.features.pin_code.ui.change_pin_code.ChangePinCodeComponent
@@ -20,11 +23,6 @@ import ru.mobileup.features.pin_code.ui.create_pin_code.CreatePinCodeMode
 import ru.mobileup.features.pin_code.ui.create_pin_code.RealCreatePinCodeComponent
 import ru.mobileup.features.pin_code.ui.pin_code.PinCodeComponent
 import ru.mobileup.features.pin_code.ui.pin_code.RealPinCodeComponent
-import org.koin.android.ext.koin.androidContext
-import org.koin.core.component.get
-import org.koin.core.qualifier.named
-import org.koin.dsl.bind
-import org.koin.dsl.module
 import ru.mobileup.features.pin_code.ui.pin_code_protection.PinCodeProtectionComponent
 import ru.mobileup.features.pin_code.ui.pin_code_protection.RealPinCodeProtectionComponent
 
@@ -39,11 +37,11 @@ val pinCodeModule = module {
             alias = alias
         )
     }
-    single { PinCodeCleaner(get()) } bind DataCleaner::class
     single<PinCodeStorage> { PinCodeStorageImpl(get(named(pinCodePrefsName))) }
     factory { SavePinCodeInteractor(get()) }
     factory { IsPinCodeSetInteractor(get()) }
     factory { CheckPinCodeInteractor(get()) }
+    factory { ClearPinCodeInteractor(get()) }
 }
 
 fun ComponentFactory.createCreatingPinCodeComponent(

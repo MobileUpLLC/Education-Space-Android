@@ -16,9 +16,6 @@
     <string name="check_pincode_forgotten_dialog_title">Forgot code?</string>
     <string name="check_pincode_forgotten_dialog_msg">If you forgot the pin code, then you need to exit the application to install a new one.</string>
     <string name="check_pincode_forgotten_dialog_positive_btn">Exit</string>
-    <string name="check_pincode_attempts_limit_dialog_tittle">Forgot code?</string>
-    <string name="check_pincode_attempts_limit_dialog_msg">If you have forgotten your pin code, you can update it in the settings.</string>
-    <string name="check_pincode_attempts_limit_dialog_btn">OK</string>
 
     <!--  Change pincode  -->
     <string name="change_pincode_toolbar_title">Pin code</string>

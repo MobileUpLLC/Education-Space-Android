@@ -50,8 +50,6 @@ class RealCheckPinCodeComponent(
 
     override val forgottenPinCodeDialogControl = DialogControl<AlertDialogData, DialogResult>()
 
-    override val attemptsLimitDialogControl = DialogControl<AlertDialogData, DialogResult>()
-
     override val pinCodeComponent: PinCodeComponent =
         componentFactory.createPinCodeComponent(
             childContext("pincode"),
@@ -100,7 +98,7 @@ class RealCheckPinCodeComponent(
             title = LocalizedString.resource(R.string.check_pincode_forgotten_dialog_title),
             message = LocalizedString.resource(R.string.check_pincode_forgotten_dialog_msg),
             positiveButtonText = LocalizedString.resource(R.string.check_pincode_forgotten_dialog_positive_btn),
-            dismissButtonText = LocalizedString.resource(ru.mobileup.core.R.string.common_cancel),
+            dismissButtonText = LocalizedString.resource(ru.mobileup.core.R.string.common_cancel)
         )
         val result = forgottenPinCodeDialogControl.showForResult(data) ?: DialogResult.Cancel
         if (result == DialogResult.Confirm) {
@@ -111,11 +109,15 @@ class RealCheckPinCodeComponent(
 
     private fun showAttemptsLimitDialog() = coroutineScope.safeLaunch(errorHandler) {
         val data = AlertDialogData(
-            title = LocalizedString.resource(R.string.check_pincode_attempts_limit_dialog_tittle),
-            message = LocalizedString.resource(R.string.check_pincode_attempts_limit_dialog_msg),
-            positiveButtonText = LocalizedString.resource(R.string.check_pincode_attempts_limit_dialog_btn)
+            title = LocalizedString.resource(R.string.check_pincode_forgotten_dialog_title),
+            message = LocalizedString.resource(R.string.check_pincode_forgotten_dialog_msg),
+            positiveButtonText = LocalizedString.resource(R.string.check_pincode_forgotten_dialog_positive_btn)
         )
-        attemptsLimitDialogControl.show(data)
+        val result = forgottenPinCodeDialogControl.showForResult(data) ?: DialogResult.Cancel
+        if (result == DialogResult.Confirm) {
+            logoutInteractor.execute()
+            onOutput(CheckPinCodeComponent.Output.LoggedOut)
+        }
     }
 
     private fun subscribeBiometricAuthenticationResult() {
