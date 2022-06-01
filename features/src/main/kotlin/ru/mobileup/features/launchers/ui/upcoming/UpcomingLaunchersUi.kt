@@ -18,15 +18,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberImagePainter
 import me.aartikov.replica.single.Loadable
-import ru.mobileup.core.widget.Toolbar
 import ru.mobileup.core.theme.AppTheme
-import ru.mobileup.features.launchers.domain.LauncherId
-import ru.mobileup.features.R
 import ru.mobileup.core.utils.resolve
-import ru.mobileup.features.launchers.ui.LauncherViewData
-import me.aartikov.sesame.loading.simple.Loading
 import ru.mobileup.core.widget.LceWidget
 import ru.mobileup.core.widget.SecureScreen
+import ru.mobileup.core.widget.Toolbar
+import ru.mobileup.features.R
+import ru.mobileup.features.launchers.domain.LauncherId
+import ru.mobileup.features.launchers.ui.LauncherViewData
 
 @Composable
 fun UpcomingLaunchersUi(

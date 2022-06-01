@@ -1,9 +1,15 @@
-package ru.mobileup.education_space.utils
+package ru.mobileup.education_space.launchers
 
-object FakeData {
-    val launchersEmptyResponse = "[]"
+import kotlinx.datetime.Instant
+import me.aartikov.sesame.localizedstring.LocalizedString
+import ru.mobileup.core.utils.DateTimeLocalizedString
+import ru.mobileup.features.R
+import ru.mobileup.features.launchers.domain.LauncherId
+import ru.mobileup.features.launchers.ui.LauncherViewData
 
-    val launchersListResponse = """
+object FakeLaunchers {
+
+    val upcomingLaunchersJson = """
         [
           {
             "fairings": null,
@@ -143,4 +149,12 @@ object FakeData {
           }
         ]
     """.trimIndent()
+
+    val upcomingLauncher = LauncherViewData(
+        id = LauncherId("61eefaa89eb1064137a1bd73"),
+        name = LocalizedString.raw("Ax-1"),
+        flightNumber = LocalizedString.resource(R.string.launchers_flight_number, 155),
+        launchDate = DateTimeLocalizedString(Instant.parse("2022-03-30T18:45:00Z")),
+        patchImage = "https://i.imgur.com/h4x6VFd.png"
+    )
 }

@@ -8,7 +8,7 @@ import me.nemiron.hyperion.networkemulation.NetworkEmulatorInterceptor
 import okhttp3.Interceptor
 import ru.mobileup.core.debug_tools.DebugTools
 
-class RealDebugToolsImpl(context: Context) : DebugTools {
+class RealDebugTools(context: Context) : DebugTools {
 
     private val networkEmulatorInterceptor = NetworkEmulatorInterceptor(context)
 
@@ -22,7 +22,6 @@ class RealDebugToolsImpl(context: Context) : DebugTools {
         .Builder(context)
         .collector(chuckerCollector)
         .build()
-
 
     override val interceptors: List<Interceptor> = listOf(
         networkEmulatorInterceptor,

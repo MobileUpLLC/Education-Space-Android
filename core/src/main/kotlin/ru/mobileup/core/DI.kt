@@ -16,9 +16,7 @@ import ru.mobileup.core.exit.ExitService
 import ru.mobileup.core.exit.ExitServiceImpl
 import ru.mobileup.core.message.data.MessageService
 import ru.mobileup.core.message.data.MessageServiceImpl
-import ru.mobileup.core.network.BaseUrlProvider
 import ru.mobileup.core.network.NetworkApiFactory
-import ru.mobileup.core.network.RealBaseUrlProvider
 import ru.mobileup.core.storage.RealRoomDatabaseFactory
 import ru.mobileup.core.storage.RealSharedPreferencesFactory
 import ru.mobileup.core.storage.SharedPreferencesFactory
@@ -30,14 +28,13 @@ fun coreModule(backendUrl: String) = module {
     single<SharedPreferencesFactory> { RealSharedPreferencesFactory() }
     single<ExitService> { ExitServiceImpl(get()) }
     single<BiometricService> { BiometricServiceImpl(get(), androidContext()) }
-    single<BaseUrlProvider> { RealBaseUrlProvider(backendUrl) }
     single<NetworkConnectivityProvider> { AndroidNetworkConnectivityProvider(androidApplication()) }
     single { ReplicaClient(get()) }
     single { ReplicaDevTools(get(), androidContext()) }
     single<MessageService> { MessageServiceImpl() }
     single { ErrorHandler(get()) }
     single { RealRoomDatabaseFactory().createDatabaseInstance(androidContext()) }
-    single<DebugTools> { RealDebugToolsImpl(androidContext()) }
-    single { NetworkApiFactory(get(), get()) }
+    single<DebugTools> { RealDebugTools(androidContext()) }
+    single { NetworkApiFactory(backendUrl, get()) }
     single<TimeGateway> { TimeGatewayImpl() }
 }
