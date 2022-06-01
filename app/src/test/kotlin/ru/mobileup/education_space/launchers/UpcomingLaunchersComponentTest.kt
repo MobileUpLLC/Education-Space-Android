@@ -17,7 +17,7 @@ class UpcomingLaunchersComponentTest {
     val koinTestRule = KoinTestRule.create()
 
     @Test
-    fun `shows data when it is loaded`() {
+    fun `loads launchers list for a specified id on start`() {
         val koin = koinTestRule.testKoin()
         val fakeWebServer = koin.fakeWebServer
         val componentContext = TestComponentContext()
@@ -36,7 +36,7 @@ class UpcomingLaunchersComponentTest {
     }
 
     @Test
-    fun `shows error when loader failed`() {
+    fun `shows fullscreen error when details loading failed`() {
         val koin = koinTestRule.testKoin()
         val fakeWebServer = koin.fakeWebServer
         val componentContext = TestComponentContext()
@@ -54,7 +54,7 @@ class UpcomingLaunchersComponentTest {
     }
 
     @Test
-    fun `update data when retry click`() {
+    fun `reloads list when retry is clicked after failed loading`() {
         val koin = koinTestRule.testKoin()
         val fakeWebServer = koin.fakeWebServer
         val componentContext = TestComponentContext()

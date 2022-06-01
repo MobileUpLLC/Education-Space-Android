@@ -20,7 +20,7 @@ class SolarSystemPlanetsComponentTest {
     val koinTestRule = KoinTestRule.create()
 
     @Test
-    fun `shows data when it is loaded`() {
+    fun `loads solar system list for a specified id on start`() {
         val koin = koinTestRule.testKoin()
         val componentContext = TestComponentContext()
         val sut = koin.componentFactory.createSolarSystemPlanetsComponent(componentContext)
