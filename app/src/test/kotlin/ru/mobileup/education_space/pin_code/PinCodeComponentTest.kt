@@ -11,9 +11,11 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.koin.test.KoinTestRule
+import ru.mobileup.education_space.utils.OutputCaptor
 import ru.mobileup.features.pin_code.createPinCodeComponent
 import ru.mobileup.features.pin_code.domain.PinCode
 import ru.mobileup.features.pin_code.ui.pin_code.PinCodeComponent
+import kotlin.test.assertEquals
 
 @RunWith(AndroidJUnit4::class)
 class PinCodeComponentTest {
@@ -63,21 +65,21 @@ class PinCodeComponentTest {
         sut.onBackspaceClick()
         val actualPinCodeProgress = sut.progress
 
-        Assert.assertEquals(PinCodeComponent.ProgressState.Progress(2), actualPinCodeProgress)
+        assertEquals(PinCodeComponent.ProgressState.Progress(2), actualPinCodeProgress)
     }
 
     @Test
     fun `sends output when pin code entering complete`() {
         val koin = koinTestRule.testKoin()
         val componentContext = TestComponentContext()
-        var actualOutput: PinCodeComponent.Output? = null
+        val outputCaptor = OutputCaptor<PinCodeComponent.Output>()
         val sut = koin
             .componentFactory
             .createPinCodeComponent(
                 componentContext = componentContext,
                 isForgetPinCodeButtonVisible = false,
                 isFingerprintButtonVisible = false,
-                onOutput = { actualOutput = it }
+                onOutput = outputCaptor
             )
         componentContext.moveToState(Lifecycle.State.RESUMED)
 
@@ -86,7 +88,10 @@ class PinCodeComponentTest {
         sut.onDigitClick("3")
         sut.onDigitClick("4")
 
-        Assert.assertEquals(PinCodeComponent.Output.PinCodeEntered(PinCode("1234")), actualOutput)
+        assertEquals(
+            expected = listOf(PinCodeComponent.Output.PinCodeEntered(PinCode("1234"))),
+            actual = outputCaptor.outputs
+        )
     }
 
     @Test
@@ -109,7 +114,7 @@ class PinCodeComponentTest {
         sut.clearInput()
         val actualPinCodeProgress = sut.progress
 
-        Assert.assertEquals(
+        assertEquals(
             PinCodeComponent.ProgressState.Progress(0),
             actualPinCodeProgress
         )
@@ -137,47 +142,53 @@ class PinCodeComponentTest {
         sut.onDigitClick("5")
         val actualPinCodeProgress = sut.progress
 
-        Assert.assertEquals(PinCodeComponent.ProgressState.Progress(2), actualPinCodeProgress)
+        assertEquals(PinCodeComponent.ProgressState.Progress(2), actualPinCodeProgress)
     }
 
     @Test
     fun `sends output when fingerprint click`() {
         val koin = koinTestRule.testKoin()
         val componentContext = TestComponentContext()
-        var actualOutput: PinCodeComponent.Output? = null
+        val outputCaptor = OutputCaptor<PinCodeComponent.Output>()
         val sut = koin
             .componentFactory
             .createPinCodeComponent(
                 componentContext = componentContext,
                 isForgetPinCodeButtonVisible = false,
                 isFingerprintButtonVisible = false,
-                onOutput = { actualOutput = it }
+                onOutput = outputCaptor
             )
         componentContext.moveToState(Lifecycle.State.RESUMED)
 
         sut.onFingerprintClick()
 
-        Assert.assertEquals(PinCodeComponent.Output.FingerprintAuthentication, actualOutput)
+        assertEquals(
+            expected = listOf(PinCodeComponent.Output.FingerprintAuthentication),
+            actual = outputCaptor.outputs
+        )
     }
 
     @Test
     fun `sends output when forgot pin code click`() {
         val koin = koinTestRule.testKoin()
         val componentContext = TestComponentContext()
-        var actualOutput: PinCodeComponent.Output? = null
+        val outputCaptor = OutputCaptor<PinCodeComponent.Output>()
         val sut = koin
             .componentFactory
             .createPinCodeComponent(
                 componentContext = componentContext,
                 isForgetPinCodeButtonVisible = false,
                 isFingerprintButtonVisible = false,
-                onOutput = { actualOutput = it }
+                onOutput = outputCaptor
             )
         componentContext.moveToState(Lifecycle.State.RESUMED)
 
         sut.onForgotPinCodeClick()
 
-        Assert.assertEquals(PinCodeComponent.Output.PinCodeForgotten, actualOutput)
+        assertEquals(
+            expected = listOf(PinCodeComponent.Output.PinCodeForgotten),
+            actual = outputCaptor.outputs
+        )
     }
 
     @Test
@@ -197,7 +208,7 @@ class PinCodeComponentTest {
         sut.showError(LocalizedString.raw("abcd"))
         val actualPinCodeProgress = sut.progress
 
-        Assert.assertEquals(
+        assertEquals(
             PinCodeComponent.ProgressState.Error(LocalizedString.raw("abcd")),
             actualPinCodeProgress
         )

@@ -4,7 +4,7 @@ import android.content.Context
 import okhttp3.Interceptor
 import ru.mobileup.core.debug_tools.DebugTools
 
-class RealDebugToolsImpl(context: Context) : DebugTools {
+class RealDebugTools(context: Context) : DebugTools {
 
     override val interceptors: List<Interceptor> = emptyList()
 

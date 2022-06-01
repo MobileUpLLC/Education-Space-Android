@@ -7,7 +7,7 @@ import me.aartikov.replica.single.Replica
 import ru.mobileup.core.error_handling.ErrorHandler
 import ru.mobileup.features.launchers.domain.Launcher
 import ru.mobileup.features.launchers.ui.toViewData
-import  ru.mobileup.core.utils.observe
+import ru.mobileup.core.utils.observe
 import me.aartikov.replica.single.mapData
 
 class RealUpcomingLaunchersComponent(
